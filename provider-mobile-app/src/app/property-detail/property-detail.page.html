@@ -1,0 +1,61 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-button
+        shape="round"
+        size="small"
+        (click)="navToProperties()"
+        color="danger"
+        >Back</ion-button
+      >
+      <h1 text-center>{{ name }}</h1>
+
+    </ion-toolbar>
+  </ion-header>
+    <ion-card>
+      <ion-slides>
+        <ion-slide>
+          <img src="{{ imageUrl }}" />
+        </ion-slide>
+        <ion-slide>
+          <img src="{{ imageUrl }}" />
+        </ion-slide>
+        <ion-slide>
+          <img src="{{ imageUrl }}" />
+        </ion-slide>
+      </ion-slides>
+      <ion-card-header>
+        <ion-card-subtitle>{{ location }}</ion-card-subtitle>
+        <ion-card-title>{{ name }}</ion-card-title>
+        <h2>
+          <i>{{ price }} ZAR/Night</i>
+        </h2>
+      </ion-card-header>
+    </ion-card>
+
+    <ion-button
+      size="medium"
+      shape="round"
+      expand="full"
+      (click)="navToEditPage()"
+    >
+     Edit Listing <ion-icon slot="end" name="ios-arrow-forward"></ion-icon>
+    </ion-button>
+    <ion-button
+      size="medium"
+      shape="round"
+      expand="full"
+      (click)="navToRequest(propertyId)"
+    >
+      Manage Booking Requests <ion-icon slot="end" name="ios-arrow-forward"></ion-icon>
+    </ion-button>
+    <ion-button
+      size="medium"
+      shape="round"
+      expand="full"
+      color="danger"
+      (click)="deleteListing()"
+    >
+      Remove Listing<ion-icon slot="end" name="ios-arrow-forward"></ion-icon>
+    </ion-button>
+</ion-content>
