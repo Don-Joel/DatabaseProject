@@ -1,7 +1,8 @@
 export class Properties{
-    public id: number;
-    public name: string;
-    public price: string;
-    public location: string;
-    public imageUrl: string;
+    public propertyId: number;
+    public description: string;
+    public rent: number;
+    public numBed: number;
+    public numBath: number;
+    public addressID: number;
 }
