@@ -1,14 +1,17 @@
 const mysqlConn = require("../database/database");
 
-module.exports = class University {
-    constructor(schoolName){
-        this.schoolName = schoolName;
+module.exports = class Address {
+    constructor(street, city, state, zipCode) {
+      this.street = street;
+      this.city = city;
+      this.state = state;
+      this.zipCode = zipCode;
     }
 
-//post a new university
-  create(school) {
+//post a new address
+create(address) {
     return new Promise((resolve, reject) => {
-      mysqlConn.query("INSERT INTO University set ?", school, (err, res) => {
+      mysqlConn.query("INSERT INTO Address set ?", address, (err, res) => {
         if (err) {
           console.log("error: ", err);
           reject(err);
@@ -20,10 +23,10 @@ module.exports = class University {
     });
   }
 
- //read all university
+ //read all address
  getAll() {
     return new Promise((resolve, reject) => {
-      mysqlConn.query("Select * from University", (err, res) => {
+      mysqlConn.query("Select * from Address", (err, res) => {
         if (err) {
           reject(err);
         } else {
@@ -36,7 +39,7 @@ module.exports = class University {
   //Read by ID
   getById(id) {
     return new Promise((reject, resolve) => {
-      mysqlConn.query("Select * from University where universityID = ? ", id, (err, res) => {
+      mysqlConn.query("Select * from Address where addressID = ?", id, (err, res) => {
         if (err) {
           reject(err);
         } else {
@@ -46,11 +49,11 @@ module.exports = class University {
     });
   }
 
-  updateById(id, school) {
+  updateById(id, address) {
     return new Promise((resolve, reject) => {
       mysqlConn.query(
-        "UPDATE University SET schoolName= ? WHERE universityID = ?",
-        [school.schoolName, id],
+        "UPDATE Address SET street = ?, city = ?, state = ?, zipCode = ? WHERE addressID = ?",
+        [address.street, address.city, address.state, address.zipCode, id],
         (err, res) => {
           if (err) {
             reject(err);
@@ -65,7 +68,7 @@ module.exports = class University {
   //delete
   remove(id) {
     return new Promise((reject, resolve) => {
-      mysqlConn.query("DELETE FROM University WHERE universityID = ?", id, (err, res) => {
+      mysqlConn.query("DELETE FROM Address WHERE addressID = ?", id, (err, res) => {
         if (err) {
           console.log("error: ", err);
           reject(err);
@@ -75,6 +78,5 @@ module.exports = class University {
       });
     });
   }
-
+  
 };
-
