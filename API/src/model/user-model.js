@@ -1,28 +1,3 @@
-// const users = [
-//     {
-//         "id": "1",
-//         "name": "Byron",
-//         "role": "user",
-//         "email": "byron@mail.com",
-//         "password": "P@ssword"
-//     },
-//     {
-//         "id": "2",
-//         "name": "brett",
-//         "role": "service provider",
-//         "email": "brett@mail.com",
-//         "password": "P@ssword1"
-//     },
-//     {
-//         "id": "3",
-//         "name": "Riaz",
-//         "role": "user",
-//         "email": "riaz@mail.com",
-//         "password": "P@ssword2"
-//     }
-// ]
-
-//const fs = require('fs');
 const mysqlConn = require("../database/database");
 
 const roles = {
@@ -31,14 +6,19 @@ const roles = {
   USER: "user"
 };
 
+const {
+  generateSalt,
+  hash,
+  compare
+} = require('../services/hashing-service');
+
 module.exports = class User {
-  constructor(surName, name, cellPhone, email, password, role) {
-    this.name = name;
-    this.surName = surName;
-    this.cellPhone = cellPhone;
+  constructor(firstName, lastName, email, password, addressID) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
     this.password = password;
-    this.role = role;
+    this.addressID = addressID;
   }
 
   //post a new user
@@ -50,38 +30,38 @@ module.exports = class User {
           reject(err);
         } else {
           console.log(res);
+          console.log(newUser);
           resolve(res);
         }
       });
     });
   }
 
-  setImageUrl(userId, url) {
-    return new Promise((resolve, reject) => {
-      User.prototype.updateImage(userId, url, (err, res) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(res);
-      });
-    });
-  }
+  // setImageUrl(userId, url) {
+  //   return new Promise((resolve, reject) => {
+  //     User.prototype.updateImage(userId, url, (err, res) => {
+  //       if (err) {
+  //         reject(err);
+  //       }
+  //       resolve(res);
+  //     });
+  //   });
+  // }
 
-  updateImage(userId, imgUrl) {
-    return new Promise((resolve, reject) => {});
-  }
+  // updateImage(userId, imgUrl) {
+  //   return new Promise((resolve, reject) => {});
+  // }
 
   updateById(userId, user) {
     return new Promise((resolve, reject) => {
       mysqlConn.query(
-        "UPDATE user SET name = ?, surName = ?, cellPhone = ?, email = ?, password = ?, role = ? WHERE id = ?",
+        "UPDATE user SET firstName = ?, lastName = ?, email = ?, password = ?, addressID = ? WHERE id = ?",
         [
-          user.name,
-          user.surName,
-          user.cellPhone,
+          user.firstName,
+          user.lastName,
           user.email,
           user.password,
-          user.role,
+          user.addressID,
           userId
         ],
         (err, res) => {
