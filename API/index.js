@@ -28,7 +28,7 @@ app.use("/api/auth-provider", require("./src/api/auth-provider-routes"));
 app.use("/api/provider", require("./src/api/auth-provider-routes"));
 app.use("/api/properties", require("./src/api/properties-routes"));
 app.use("/api/bookings", require("./src/api/booking-routes"));
-
+app.use("/api/university", require("./src/api/university-routes"));
 //Custom middleware
 app.use((req, res, next) => {
   console.log("This is the middleware function printing the body: ");

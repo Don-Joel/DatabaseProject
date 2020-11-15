@@ -6,12 +6,6 @@ const roles = {
   USER: "user"
 };
 
-const {
-  generateSalt,
-  hash,
-  compare
-} = require('../services/hashing-service');
-
 module.exports = class User {
   constructor(firstName, lastName, email, password, addressID) {
     this.firstName = firstName;
@@ -24,7 +18,7 @@ module.exports = class User {
   //post a new user
   create(newUser) {
     return new Promise((resolve, reject) => {
-      mysqlConn.query("INSERT INTO user set ?", newUser, (err, res) => {
+      mysqlConn.query("INSERT INTO User set ?", newUser, (err, res) => {
         if (err) {
           console.log("error: ", err);
           reject(err);
@@ -55,7 +49,7 @@ module.exports = class User {
   updateById(userId, user) {
     return new Promise((resolve, reject) => {
       mysqlConn.query(
-        "UPDATE user SET firstName = ?, lastName = ?, email = ?, password = ?, addressID = ? WHERE id = ?",
+        "UPDATE User SET firstName = ?, lastName = ?, email = ?, password = ?, addressID = ? WHERE userID = ?",
         [
           user.firstName,
           user.lastName,
@@ -78,7 +72,7 @@ module.exports = class User {
   //delete
   remove(userId) {
     return new Promise((reject, resolve) => {
-      mysqlConn.query("DELETE FROM user WHERE id = ?", userId, (err, res) => {
+      mysqlConn.query("DELETE FROM User WHERE userID = ?", userId, (err, res) => {
         if (err) {
           console.log("error: ", err);
           reject(err);
@@ -93,7 +87,7 @@ module.exports = class User {
   getById(userId) {
     return new Promise((reject, resolve) => {
       mysqlConn.query(
-        "Select * from user where id = ? ",
+        "Select * from User where userID = ? ",
         userId,
         (err, res) => {
           if (err) {
@@ -109,7 +103,7 @@ module.exports = class User {
   //read all users
   getAll() {
     return new Promise((resolve, reject) => {
-      mysqlConn.query("Select * from user", (err, res) => {
+      mysqlConn.query("Select * from User", (err, res) => {
         if (err) {
           reject(err);
         } else {
