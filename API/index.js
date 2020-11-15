@@ -7,7 +7,10 @@ const app = express();
 const cors = require("cors");
 app.use(cors());
 
-//
+// Logger 
+let logger = func => {
+  console.log(func);
+}
 
 //Body parser middleware
 app.use(express.json());
@@ -17,12 +20,6 @@ app.use(
   })
 );
 
-//upload image
-//const multipartMiddleware = multipart({ uploadDir: "./uploads" });
-
-//middleware function that has access to req and res
-//app.use(jwtAuth);
-
 //Routes
 app.use("/api/user", require("./src/api/user-routes"));
 app.use("/api/provider", require("./src/api/provider-routes"));
@@ -31,6 +28,8 @@ app.use("/api/auth-provider", require("./src/api/auth-provider-routes"));
 app.use("/api/provider", require("./src/api/auth-provider-routes"));
 app.use("/api/properties", require("./src/api/properties-routes"));
 app.use("/api/bookings", require("./src/api/booking-routes"));
+app.use("/api/university", require("./src/api/university-routes"));
+app.use("/api/address", require("./src/api/address-routes"));
 
 //Custom middleware
 app.use((req, res, next) => {
@@ -39,7 +38,8 @@ app.use((req, res, next) => {
   next();
 });
 
-const PORT = process.env.PORT || 3000;
+
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, "127.0.0.1", () =>
   console.log(`Server running on port ${PORT}`)

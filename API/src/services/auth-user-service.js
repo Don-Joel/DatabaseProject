@@ -1,13 +1,16 @@
 const User = require("../model/user-model");
 
-// //instantiate bcrypt
-// var bcrypt = require('bcryptjs');
-
 // //instantiate json web token
 // var jwt = require('jsonwebtoken');
+const {
+  generateSalt,
+  hash,
+  compare
+} = require('./hashing-service');
 
 module.exports = class AuthService {
   constructor() {}
+ 
 
   //to hash a password
   //salting 10 characters to hashed password
@@ -89,8 +92,9 @@ module.exports = class AuthService {
               reject("Please fill out all required fields.");
             }
           } else {
+            let authUserHashed = new User(authUser.firstName,authUser.lastName,authUser.email, hash(authUser.password,generateSalt(10)),authUser.addressID);
             User.prototype
-              .create(authUser)
+              .create(authUserHashed)
               .then(user => resolve(user))
               .catch(err => reject(err));
           }

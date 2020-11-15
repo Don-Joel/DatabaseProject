@@ -1,28 +1,3 @@
-// const users = [
-//     {
-//         "id": "1",
-//         "name": "Byron",
-//         "role": "user",
-//         "email": "byron@mail.com",
-//         "password": "P@ssword"
-//     },
-//     {
-//         "id": "2",
-//         "name": "brett",
-//         "role": "service provider",
-//         "email": "brett@mail.com",
-//         "password": "P@ssword1"
-//     },
-//     {
-//         "id": "3",
-//         "name": "Riaz",
-//         "role": "user",
-//         "email": "riaz@mail.com",
-//         "password": "P@ssword2"
-//     }
-// ]
-
-//const fs = require('fs');
 const mysqlConn = require("../database/database");
 
 const roles = {
@@ -32,56 +7,55 @@ const roles = {
 };
 
 module.exports = class User {
-  constructor(surName, name, cellPhone, email, password, role) {
-    this.name = name;
-    this.surName = surName;
-    this.cellPhone = cellPhone;
+  constructor(firstName, lastName, email, password, addressID) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
     this.password = password;
-    this.role = role;
+    this.addressID = addressID;
   }
 
   //post a new user
   create(newUser) {
     return new Promise((resolve, reject) => {
-      mysqlConn.query("INSERT INTO user set ?", newUser, (err, res) => {
+      mysqlConn.query("INSERT INTO User set ?", newUser, (err, res) => {
         if (err) {
           console.log("error: ", err);
           reject(err);
         } else {
           console.log(res);
+          console.log(newUser);
           resolve(res);
         }
       });
     });
   }
 
-  setImageUrl(userId, url) {
-    return new Promise((resolve, reject) => {
-      User.prototype.updateImage(userId, url, (err, res) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(res);
-      });
-    });
-  }
+  // setImageUrl(userId, url) {
+  //   return new Promise((resolve, reject) => {
+  //     User.prototype.updateImage(userId, url, (err, res) => {
+  //       if (err) {
+  //         reject(err);
+  //       }
+  //       resolve(res);
+  //     });
+  //   });
+  // }
 
-  updateImage(userId, imgUrl) {
-    return new Promise((resolve, reject) => {});
-  }
+  // updateImage(userId, imgUrl) {
+  //   return new Promise((resolve, reject) => {});
+  // }
 
   updateById(userId, user) {
     return new Promise((resolve, reject) => {
       mysqlConn.query(
-        "UPDATE user SET name = ?, surName = ?, cellPhone = ?, email = ?, password = ?, role = ? WHERE id = ?",
+        "UPDATE User SET firstName = ?, lastName = ?, email = ?, password = ?, addressID = ? WHERE userID = ?",
         [
-          user.name,
-          user.surName,
-          user.cellPhone,
+          user.firstName,
+          user.lastName,
           user.email,
           user.password,
-          user.role,
+          user.addressID,
           userId
         ],
         (err, res) => {
@@ -98,7 +72,7 @@ module.exports = class User {
   //delete
   remove(userId) {
     return new Promise((reject, resolve) => {
-      mysqlConn.query("DELETE FROM user WHERE id = ?", userId, (err, res) => {
+      mysqlConn.query("DELETE FROM User WHERE userID = ?", userId, (err, res) => {
         if (err) {
           console.log("error: ", err);
           reject(err);
@@ -113,7 +87,7 @@ module.exports = class User {
   getById(userId) {
     return new Promise((reject, resolve) => {
       mysqlConn.query(
-        "Select * from user where id = ? ",
+        "Select * from User where userID = ? ",
         userId,
         (err, res) => {
           if (err) {
@@ -129,7 +103,7 @@ module.exports = class User {
   //read all users
   getAll() {
     return new Promise((resolve, reject) => {
-      mysqlConn.query("Select * from user", (err, res) => {
+      mysqlConn.query("Select * from User", (err, res) => {
         if (err) {
           reject(err);
         } else {
