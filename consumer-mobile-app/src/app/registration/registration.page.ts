@@ -14,10 +14,10 @@ export class RegistrationPage {
   public email: string;
   public password: string;
   public users: any;
-  public cellPhone: string;
-  public surName: string;
-  public name: string;
-  public role: string;
+  // public cellPhone: string;
+  public lastName: string;
+  public firstName: string;
+  public addressID: string;
 
   constructor(
     private navCtrl: NavController,
@@ -45,12 +45,12 @@ export class RegistrationPage {
 
   register() {
     const authUser = {
-      name: this.name,
-      surName: this.surName,
-      cellPhone: this.cellPhone,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      // cellPhone: this.cellPhone,
       email: this.email,
       password: this.password,
-      role: "user"
+      addressID: 20
     };
     this.authService
       .register(authUser)
@@ -64,9 +64,9 @@ export class RegistrationPage {
         debugger;
         if (
           (authUser.email ||
-            authUser.name ||
-            authUser.surName ||
-            authUser.cellPhone ||
+            authUser.firstName ||
+            authUser.lastName ||
+            //authUser.cellPhone ||
             authUser.password) == null
         ) {
           this.presentAlertCredentials(err.statusText);
